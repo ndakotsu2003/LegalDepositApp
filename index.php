@@ -65,8 +65,9 @@ if ($_SESSION['sType'] == 'admin'){
 </tr>
           </thead>
             <tbody>
+               
             <?php
-                $query = "select books.book_id, books.title, books.author, books.p_name,books.p_of_pub,books.y_of_pub,books.isbn_ssn,books.access_no,legald.l_dep_no,legald.copies_deposit,legald.contact_address,legald.remark from books inner join legald on books.book_id = legald.book_id";
+                $query = "select books.book_id, books.title, books.author, books.p_name,books.p_of_pub,books.y_of_pub,books.isbn_ssn,books.access_no,legald.l_dep_no,legald.copies_deposit,legald.contact_address,legald.remark from books inner join legald on books.book_id = legald.book_id ORDER by legald.d_o_dep DESC";
                 $result = mysqli_query($config, $query);
                 
                         
@@ -88,11 +89,13 @@ if ($_SESSION['sType'] == 'admin'){
             <?php if($_SESSION['sType'] == 'admin'){ ?>
              <td class="tab_data action_butt"><a class="btt"><button id="del" onclick = "deleted(<?php echo $row['book_id']?>)" value = "<?php echo $row['book_id']?>">Delete</button></a>
              <a class="btt" href= "edit.php?id=<?php echo $row['book_id']?> & crazy"  ><button id="edit">Edit</button></a>
+             <a class="btt" href= "view.php?id=<?php echo $row['book_id']?> & crazy"  ><button id="edit">View</button></a>
             </td> 
             <?php }
              else {?>
              <td class="tab_data action_butt">
              <a class="btt" href= "edit.php?id=<?php echo $row['book_id']?> & crazy"  ><button id="edit">Edit</button></a>
+             <a class="btt" href= "view.php?id=<?php echo $row['book_id']?> & crazy"  ><button id="edit">View</button></a>
 
              <?php }?>
              

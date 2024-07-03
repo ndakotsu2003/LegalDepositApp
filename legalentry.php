@@ -13,15 +13,17 @@
     $y_pub = $_POST['y_publication'];
     $isbn = $_POST['isbn_ssn'];
     $acc_no = $_POST["ac_no"];
+    $book_cat = $_POST["bCat"];
     $deposit_no = $_POST["ld_no"];
     $date_dep = date('Y-m-d',strtotime($_POST['d_o_d']));
     $booktype = $_POST["bType"];
+    $dep_type = $_POST["gui"];
     $state_dep = $_POST["sDepo"];
     $con_add = $_POST["c_add"];
     $remarks = $_POST["remarks"];
 
-    $query = "insert  into books (book_id,title,author,p_name,p_of_pub,y_of_pub,isbn_ssn,access_no) values('$book_id','$book_title','$authorname','$pub_name','$placeofpub','$y_pub','$isbn','$acc_no');";
-    $query2="insert into legald (l_dep_no,copies_deposit,s_o_dep,d_o_dep,contact_address,remark, book_id) values('$deposit_no','$booktype','$state_dep','$date_dep','$con_add','$remarks','$book_id');";
+    $query = "insert  into books (book_id,title,author,p_name,p_of_pub,y_of_pub,isbn_ssn,access_no,book_type) values('$book_id','$book_title','$authorname','$pub_name','$placeofpub','$y_pub','$isbn','$acc_no','$book_cat');";
+    $query2="insert into legald (l_dep_no,copies_deposit,dep_type,s_o_dep,d_o_dep,contact_address,remark, book_id) values('$deposit_no','$booktype','$dep_type','$state_dep','$date_dep','$con_add','$remarks','$book_id');";
     mysqli_query($config,$query) or die("Error connecting to server");
     mysqli_query($config,$query2) or die("Error connecting to server");
 
@@ -83,6 +85,17 @@ if ($_SESSION['sType'] == 'admin'){
                     <input type="text" class="legInput" alt="ISBN/ISSN" placeholder="ISBN/ISSN" name="isbn_ssn" id="isbn_ssn">
                 </div>
 
+                <div class="bookCat">
+                    <label for="bookCatee" id="booklabel2">Book Category</label>
+                    <select name="bCat" id="bookCatee">
+                        <option value=" " disabled selected>Select Type</option>
+                        <option value="Monographs">Monographs</option>
+                        <option value="Serials">Serials</option>
+                       
+
+                    </select>
+                </div>
+
                 <div class="inputentry">
                     <input type="text" class="legInput" alt="Accession Number" placeholder="Accession Number" name="ac_no" id="ac_no">
                 </div>
@@ -95,14 +108,15 @@ if ($_SESSION['sType'] == 'admin'){
                 </div>
 
                 <div class="booktype">
-                    <label for="bookt" id="booklabel">Type</label>
-                    <select name="bType" id="bookt">
+                    <label for="bookt" id="booklabel1">Deposit Type</label>
+                    <select name="bType" id="bookt" >
                         <option value=" " disabled selected>Select Type</option>
                         <option value="3">Private</option>
                         <option value="10">State</option>
                         <option value="25">Federal</option>
 
                     </select>
+                    <input type="hidden" value="empty" name="gui" id="gui">
                 </div>
                 <div class="soDeposit">
                     <label for="soD" id="booklabel1">State of Deposit</label>
@@ -165,12 +179,27 @@ if ($_SESSION['sType'] == 'admin'){
 
  </div>
 <script>
+
+    document.getElementById('bookt').addEventListener("click",type,true);
         function change(){
             let a = document.getElementById('d_o_d').innerText;
             let c = a.split('-').reverse().join('-');
             a = c;
             alert(a);
             console.log(a);
+        }
+
+        function type(){
+            var vv = document.getElementById("bookt").value;
+            if(vv == "3"){
+                document.getElementById("gui").value= "Private";
+            }
+            else if (vv == "10"){
+                document.getElementById("gui").value= "State";
+            }
+            else{
+                document.getElementById("gui").value= "Federal";
+            }
         }
 
 </script>

@@ -230,7 +230,7 @@ body{
     justify-content: center;
 }
 
-.inputentry, .booktype , #subbutton, .textentry, .soDeposit, .dateDep{
+.inputentry, .booktype , #subbutton, .textentry, .soDeposit, .dateDep, .bookCat{
     margin: 15px 10px; 
 }
 .legInput{
@@ -242,11 +242,11 @@ body{
     padding: 0px 0px 0px 15px;
 }
 
-.booktype, .textentry, .soDeposit, .dateDep{
+.booktype, .textentry, .soDeposit, .dateDep, .bookCat{
     display: flex;
     flex-direction: row;
 }
-#booklabel, #remarklabel, #booklabel1 , #datelabel{
+#booklabel, #remarklabel, #booklabel1 , #datelabel , #booklabel2{
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -254,10 +254,10 @@ body{
     width: 60px;
     text-align: center;
 }
-#booklabel1, #datelabel{
+#booklabel1, #datelabel, #booklabel2{
     font-size: 14px;
 }
-#bookt, #soD, #d_o_d{
+#bookt, #soD, #d_o_d, #bookCatee{
     width: 100%;
     margin-left: 50px;
     height: 30px;
