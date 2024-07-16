@@ -17,14 +17,13 @@
     $deposit_no = $_POST["ld_no"];
     $date_dep = date('Y-m-d',strtotime($_POST['d_o_d']));
     $booktype = $_POST["bType"];
-    $aDeposited = $_POST["deposited"];
     $dep_type = $_POST["gui"];
     $state_dep = $_POST["sDepo"];
     $con_add = $_POST["c_add"];
     $remarks = $_POST["remarks"];
 
     $query = "insert  into books (book_id,title,author,p_name,p_of_pub,y_of_pub,isbn_ssn,access_no,book_type) values('$book_id','$book_title','$authorname','$pub_name','$placeofpub','$y_pub','$isbn','$acc_no','$book_cat');";
-    $query2="insert into legald (l_dep_no,copies_deposit,deposited,dep_type,s_o_dep,d_o_dep,contact_address,remark, book_id) values('$deposit_no','$booktype', '$aDeposited','$dep_type','$state_dep','$date_dep','$con_add','$remarks','$book_id');";
+    $query2="insert into legald (l_dep_no,copies_deposit,dep_type,s_o_dep,d_o_dep,contact_address,remark, book_id) values('$deposit_no','$booktype','$dep_type','$state_dep','$date_dep','$con_add','$remarks','$book_id');";
     mysqli_query($config,$query) or die("Error connecting to server");
     mysqli_query($config,$query2) or die("Error connecting to server");
 
@@ -117,7 +116,6 @@ if ($_SESSION['sType'] == 'admin'){
                         <option value="25">Federal</option>
 
                     </select>
-                    <input type="text" class="legInput" value="" placeholder="Amount Deposited"name="deposited" id="deposited">
                     <input type="hidden" value="empty" name="gui" id="gui">
                 </div>
                 <div class="soDeposit">

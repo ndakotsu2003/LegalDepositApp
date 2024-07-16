@@ -245,23 +245,39 @@ body{
 .booktype, .textentry, .soDeposit, .dateDep, .bookCat{
     display: flex;
     flex-direction: row;
+    
 }
 #booklabel, #remarklabel, #booklabel1 , #datelabel , #booklabel2{
     display: flex;
     flex-direction: column;
     justify-content: center;
-    
+   
     width: 60px;
     text-align: center;
 }
 #booklabel1, #datelabel, #booklabel2{
     font-size: 14px;
 }
-#bookt, #soD, #d_o_d, #bookCatee{
+ #soD, #d_o_d, #bookCatee{
     width: 100%;
     margin-left: 50px;
     height: 30px;
     border-radius: 5px;
+}
+#bookt{
+    width: 50%;
+    margin-left: 50px;
+    height: 30px;
+    border-radius: 5px;
+
+}
+#deposited{
+    
+    border-radius: 5px;
+    height: 30px;
+    margin-left: 50px;
+    width: 50%;
+
 }
 
 #remarks{
