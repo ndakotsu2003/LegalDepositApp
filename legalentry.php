@@ -118,7 +118,7 @@ if ($_SESSION['sType'] == 'admin'){
 
                     </select>
                     <input type="text" class="legInput" value="" placeholder="Amount Deposited"name="deposited" id="deposited">
-                    <input type="hidden" value="empty" name="gui" id="gui">
+                    <input type="text" value="empty" name="gui" id="gui">
                 </div>
                 <div class="soDeposit">
                     <label for="soD" id="booklabel1">State of Deposit</label>

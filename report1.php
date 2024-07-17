@@ -125,6 +125,8 @@
 
 
             </div>
+
+            
     </div>
     <script>
             
@@ -185,6 +187,8 @@
             }
 		});
         }
+
+        
 
         function popup(){
             document.getElementById("fillu").innerHTML = document.getElementByID("fill_up").innerText;

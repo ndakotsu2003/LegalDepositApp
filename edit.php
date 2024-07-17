@@ -21,15 +21,18 @@
     $y_pub = $_POST['y_publication'];
     $isbn = $_POST['isbn_ssn'];
     $acc_no = $_POST["ac_no"];
+    $book_cat = $_POST["bCat"];
     $deposit_no = $_POST["ld_no"];
     $date_dep = $_POST['d_o_d'];
     $booktype = $_POST["bType"];
+    $aDeposited = $_POST["deposited"];
+    $dep_type = $_POST["gui"];
     $state_dep = $_POST["sDepo"];
     $con_add = $_POST["c_add"];
     $remarks = $_POST["remarks"];
 
-    $query = "update   books SET title ='$book_title',author ='$authorname' ,p_name ='$pub_name',p_of_pub ='$placeofpub',y_of_pub =$y_pub,isbn_ssn = '$isbn',access_no = '$acc_no' where book_id = $b_id";
-    $query2="update legald SET l_dep_no='$deposit_no' ,copies_deposit='$booktype',s_o_dep ='$state_dep', d_o_dep='$date_dep', contact_address='$con_add',remark='$remarks' where book_id=$b_id";
+    $query = "update   books SET title ='$book_title',author ='$authorname' ,p_name ='$pub_name',p_of_pub ='$placeofpub',y_of_pub =$y_pub,isbn_ssn = '$isbn',access_no = '$acc_no',book_type='$book_cat' where book_id = $b_id";
+    $query2="update legald SET l_dep_no='$deposit_no' ,copies_deposit='$booktype',deposited='$aDeposited',dep_type='$dep_type',s_o_dep ='$state_dep', d_o_dep='$date_dep', contact_address='$con_add',remark='$remarks' where book_id=$b_id";
     mysqli_query($config,$query) or die("Error connecting to server");
     mysqli_query($config,$query2) or die("Error connecting to server");
 
@@ -69,7 +72,7 @@
             <?php 
                     if(isset($_GET['id'])){
                             
-                        $que ="select books.book_id, books.title, books.author, books.p_name,books.p_of_pub,books.y_of_pub,books.isbn_ssn,books.access_no,legald.l_dep_no,legald.copies_deposit,legald.s_o_dep,legald.d_o_dep,legald.contact_address,legald.remark from books inner join legald on books.book_id = legald.book_id where books.book_id = '$b_id'";
+                        $que ="select books.book_id, books.title, books.author, books.p_name,books.p_of_pub,books.y_of_pub,books.isbn_ssn,books.access_no,books.book_type,legald.l_dep_no,legald.copies_deposit,legald.deposited,legald.dep_type,legald.s_o_dep,legald.d_o_dep,legald.contact_address,legald.remark from books inner join legald on books.book_id = legald.book_id where books.book_id = '$b_id'";
                         $result = mysqli_query($config, $que); 
 
                         $row2= mysqli_fetch_assoc($result);
@@ -98,6 +101,16 @@
                 <div class="inputentry">
                     <input type="text" class="legInput" alt="ISBN/ISSN" placeholder="ISBN/ISSN" value=<?php echo $row2['isbn_ssn']?> name="isbn_ssn" id="isbn_ssn">
                 </div>
+                <div class="bookCat">
+                    <label for="bookCatee" id="booklabel2">Book Category</label>
+                    <select name="bCat" id="bookCatee">
+                        <option value=" " disabled selected>Select Type</option>
+                        <option value="Monographs" <?php if($row2['book_type'] == "Monographs"){ echo 'selected';} ?>>Monographs</option>
+                        <option value="Serials" <?php if($row2['book_type'] == "Serials"){ echo 'selected';} ?>>Serials</option>
+                       
+
+                    </select>
+                </div>
 
                 <div class="inputentry">
                     <input type="text" class="legInput" alt="Accession Number" placeholder="Accession Number" value=<?php echo $row2['access_no']?> name="ac_no" id="ac_no">
@@ -120,6 +133,8 @@
                         <option value="25" <?php if($row2['copies_deposit'] == "25"){ echo 'selected';} ?>>Federal</option>
 
                     </select>
+                    <input type="text" class="legInput" value=<?php echo $row2['deposited']?> placeholder="Amount Deposited"name="deposited" id="deposited">
+                    <input type="hidden" value=<?php echo $row2['dep_type']?> name="gui" id="gui">
                 </div>
                 <div class="soDeposit">
                     <label for="soD" id="booklabel1">State of Deposit</label>
@@ -182,6 +197,21 @@
 
         
     </div>
+    <script>
+        document.getElementById('bookt').addEventListener("click",type,true);
+         function type(){
+            var vv = document.getElementById("bookt").value;
+            if(vv == "3"){
+                document.getElementById("gui").value= "Private";
+            }
+            else if (vv == "10"){
+                document.getElementById("gui").value= "State";
+            }
+            else{
+                document.getElementById("gui").value= "Federal";
+            }
+        }
+    </script>
     <script>
     <script src="jquery/jquery3.7.js"></script>
     <script src="./bootstrap-5.3.2-dist/js/bootstrap.min.js"></script>
