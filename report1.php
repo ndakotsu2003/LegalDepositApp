@@ -33,6 +33,7 @@
             <div id="month">
                 <p>Please Select the month and year</p>
                 <div class="selectt">
+                    <input type="text" placeholder="BLOWN">
                     <label for="month_drop" id="monthlabel">Month</label>
                     <select name="mType" id="month_drop">
                     
