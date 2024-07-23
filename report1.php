@@ -126,6 +126,37 @@
 
             </div>
 
+
+            <div id="table3">
+                    <table class="table table-bordered" id="tab_3">
+                        <thead>
+                            
+                            <colgroup>
+                                            <col width="10%">
+                                            <col width="20%">
+                                            <col width="10%">
+                                            
+                                        </colgroup>
+                            <tr>
+                                <th class="text-center">x</th>
+                                <th class="text-center">Titles</th>
+                                <th class="text-center">Volumes</th>
+                                
+                                
+                            </tr>
+                                            </thead>
+                    <tbody id="tab3">
+
+
+
+                    </tbody>
+
+
+                                            </table>
+
+
+            </div>
+
             
     </div>
     <script>
@@ -148,6 +179,7 @@
         function populate(){
             firsttable();
             secondtable();
+            thirdtable();
         }
         function firsttable(){
             var mon = document.getElementById("month_drop").value;
@@ -188,6 +220,25 @@
 		});
         }
 
+
+        function thirdtable(){
+            var mon = document.getElementById("month_drop").value;
+            var yr = document.getElementById("year_drop").value;
+            $.ajax({
+			url: "rep3.php",
+			method: "POST",
+			data: {mon: mon,
+                    yr: yr
+                
+            
+                  }
+            ,
+			success: function(data){
+                           
+             $("#tab3").html(data);
+            }
+		});
+        }
         
 
         function popup(){
