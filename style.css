@@ -530,3 +530,63 @@ table{
     background-color: rgb(119, 119, 240);
     color: white;
  }
+
+ /* report page*/
+ .contain{
+    display: flex;
+    flex-direction: row;
+ }
+ #top_part{
+    display: flex;
+    flex-direction: column;
+    
+ }
+ #r_header{
+    margin: 0 50%;
+ }
+ #r_header span{
+    font-size: 30px;
+    font-weight: bold;
+    
+ }
+ #instruction,#selectt,#generate{
+    display: flex;
+   
+    height: 30px;
+
+ }
+ #generate button{
+    width: 200px;
+    border: none;
+    background-color:rgb(255, 255, 195);
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.8s;
+ }
+ #generate button:hover{
+    background-color:rgb(254, 254, 140);
+    color: white;
+    
+
+ }
+ #instruction{
+    margin-bottom: 0px;
+ }
+ #date{
+    display: flex;
+    flex-direction: column;
+    justify-content:space-between;
+    height: 110px;
+ }
+ #yearlabel{
+    margin-left: 40px;
+ }
+
+ #div_bod{
+    display: flex;
+    flex-direction: column;
+    margin-left: 30px;
+    height: 100%;
+    width: 100%;
+
+ }

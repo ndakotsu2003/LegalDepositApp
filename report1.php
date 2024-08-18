@@ -23,144 +23,156 @@
     <title>Report</title>
 </head>
 <body>
-    <header>
-    <?php include("topbarr.php"); ?>
-    </header>
-    <div class="contain">
-    <?php include("sidebar.php"); ?>
-        <div class="top_part">
-            <div id="r_header">REPORTS</div>
-            <div id="month">
-                <p>Please Select the month and year</p>
-                <div class="selectt">
-                    <input type="text" placeholder="BLOWN">
-                    <label for="month_drop" id="monthlabel">Month</label>
-                    <select name="mType" id="month_drop">
-                    
-                        <option value=" "></option>
-                        <option value="01">January</option>
-                        <option value="02">February</option>
-                        <option value="03">March</option>
-                        <option value="04">April</option>
-                        <option value="05">May</option>
-                        <option value="06">June</option>
-                        <option value="07">July</option>
-                        <option value="08">August</option>
-                        <option value="09">September</option>
-                        <option value="10">October</option>
-                        <option value="11">November</option>
-                        <option value="12">December</option>
+            <header>
+            <?php include("topbarr.php"); ?>
+            </header>
+<div class="contain">
+            <?php if ($_SESSION['sType'] == 'admin'){
+                        include("sidebar.php");   
+                          }
+                       else {
+                        include("sidebar1.php");
+                       } 
+            ?>
+       <div id="div_bod">     
+            <div id="top_part">
+                        <div id="r_header"><span>REPORTS</span></div>
+                    <div id="date">
+                        <p id="instruction">Please Select the month and year</p>
+                        <div id="selectt">
+                            <input id="d_from" type="date">
+                            <input id="d_to" type="date">
+                            <input id="see" type="text" placeholder="make we see">
+                            <label for="month_drop" id="monthlabel">Month</label>
+                            <select name="mType" id="month_drop">
+                            
+                                <option value=" "></option>
+                                <option value="01">January</option>
+                                <option value="02">February</option>
+                                <option value="03">March</option>
+                                <option value="04">April</option>
+                                <option value="05">May</option>
+                                <option value="06">June</option>
+                                <option value="07">July</option>
+                                <option value="08">August</option>
+                                <option value="09">September</option>
+                                <option value="10">October</option>
+                                <option value="11">November</option>
+                                <option value="12">December</option>
 
-                    </select>
+                            </select>
 
-                    <label for="year_drop" id="yearlabel">Year</label>
-                    <select name="yType" id="year_drop" onclick="populate_year()">
-                    
-                        <option value=" "></option>
-                    </select>
+                            <label for="year_drop" id="yearlabel">Year</label>
+                            <select name="yType" id="year_drop" onclick="populate_year()">
+                            
+                                <option value=" "></option>
+                            </select>
+                        </div>
+                        <div id="generate">
+                            <button onclick="populate()">Generate</button>
+                        </div>
+                    </div>
                 </div>
-                <div id="generate">
-                    <button onclick="populate()">Generate</button></div>
-           </div>
-        </div>
-        <div id="report">
-            <div id="table1">
-                <p>the total number of books is <span id="fillu"></span><p>
-                    <table class="table table-bordered" id="tab_1">
-                        <thead>
-                            
-                            <colgroup>
-                                            <col width="10%">
-                                            <col width="20%">
-                                            <col width="10%">
-                                            <col width="10%">
-                                            
-                                        </colgroup>
-                            <tr>
-                                <th class="text-center">S/N</th>
-                                <th class="text-center">Materials Recieved</th>
-                                <th class="text-center">Titles</th>
-                                <th class="text-center">Volumes</th>
-                                
-                            </tr>
-                                            </thead>
-                    <tbody id="tab1">
+                <div id="report">
+                    <div id="table1">
+                        <p>the total number of books is <span id="fillu"></span><p>
+                            <table class="table table-bordered" id="tab_1">
+                                <thead>
+                                    
+                                    <colgroup>
+                                                    <col width="10%">
+                                                    <col width="20%">
+                                                    <col width="10%">
+                                                    <col width="10%">
+                                                    
+                                                </colgroup>
+                                    <tr>
+                                        <th class="text-center">S/N</th>
+                                        <th class="text-center">Materials Recieved</th>
+                                        <th class="text-center">Titles</th>
+                                        <th class="text-center">Volumes</th>
+                                        
+                                    </tr>
+                                                    </thead>
+                            <tbody id="tab1">
 
 
 
-                    </tbody>
+                            </tbody>
 
 
-                                            </table>
+                                                    </table>
 
 
-            </div>
-            <div id="table2">
-                    <table class="table table-bordered" id="tab_2">
-                        <thead>
-                            
-                            <colgroup>
-                                            <col width="10%">
-                                            <col width="20%">
-                                            <col width="10%">
-                                            <col width="10%">
-                                            
-                                        </colgroup>
-                            <tr>
-                                <th class="text-center">S/N</th>
-                                <th class="text-center">State</th>
-                                <th class="text-center">Titles</th>
-                                <th class="text-center">Volumes</th>
-                                
-                                
-                            </tr>
-                                            </thead>
-                    <tbody id="tab2">
-
-
-
-                    </tbody>
-
-
-                                            </table>
-
-
-            </div>
-
-
-            <div id="table3">
-                    <table class="table table-bordered" id="tab_3">
-                        <thead>
-                            
-                            <colgroup>
-                                            <col width="10%">
-                                            <col width="20%">
-                                            <col width="10%">
-                                            
-                                        </colgroup>
-                            <tr>
-                                <th class="text-center">x</th>
-                                <th class="text-center">Titles</th>
-                                <th class="text-center">Volumes</th>
-                                
-                                
-                            </tr>
-                                            </thead>
-                    <tbody id="tab3">
+                    </div>
+                    <div id="table2">
+                            <table class="table table-bordered" id="tab_2">
+                                <thead>
+                                    
+                                    <colgroup>
+                                                    <col width="10%">
+                                                    <col width="20%">
+                                                    <col width="10%">
+                                                    <col width="10%">
+                                                    
+                                                </colgroup>
+                                    <tr>
+                                        <th class="text-center">S/N</th>
+                                        <th class="text-center">State</th>
+                                        <th class="text-center">Titles</th>
+                                        <th class="text-center">Volumes</th>
+                                        
+                                        
+                                    </tr>
+                                                    </thead>
+                            <tbody id="tab2">
 
 
 
-                    </tbody>
+                            </tbody>
 
 
-                                            </table>
+                                                    </table>
 
 
-            </div>
+                    </div>
 
+
+                    <div id="table3">
+                            <table class="table table-bordered" id="tab_3">
+                                <thead>
+                                    
+                                    <colgroup>
+                                                    <col width="10%">
+                                                    <col width="20%">
+                                                    <col width="10%">
+                                                    
+                                                </colgroup>
+                                    <tr>
+                                        <th class="text-center">x</th>
+                                        <th class="text-center">Titles</th>
+                                        <th class="text-center">Volumes</th>
+                                        
+                                        
+                                    </tr>
+                                                    </thead>
+                            <tbody id="tab3">
+
+
+
+                            </tbody>
+
+
+                                                    </table>
+
+
+                    </div>
+                </div>
+         </div>
             
     </div>
     <script>
+      
             
        
         function populate_year(){
@@ -179,17 +191,20 @@
 
         function populate(){
             firsttable();
-            secondtable();
-            thirdtable();
+            //secondtable();
+            //thirdtable();
         }
         function firsttable(){
-            var mon = document.getElementById("month_drop").value;
-            var yr = document.getElementById("year_drop").value;
+            var d_from = document.getElementById("d_from").value;
+            var d_to = document.getElementById("d_to").value;
+            console.log(d_from);
+            console.log(d_to);
+
             $.ajax({
 			url: "rep1.php",
 			method: "POST",
-			data: {mon: mon,
-                    yr: yr,
+			data: {d_from: d_from,
+                    d_to: d_to,
                 action: "populate_first"
             
                   }
@@ -244,6 +259,11 @@
 
         function popup(){
             document.getElementById("fillu").innerHTML = document.getElementByID("fill_up").innerText;
+        }
+
+        function change(para){
+            let c = para.split('-').reverse().join('-');
+            return c;
         }
     </script>
      <script src="jquery/jquery3.7.js"></script>

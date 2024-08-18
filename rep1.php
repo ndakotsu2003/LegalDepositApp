@@ -6,20 +6,20 @@
     
     
     $user_data = check_login($config);
-    $mon = $_POST['mon'];
-    $yr = $_POST['yr'];
+    $d_from = $_POST['d_from'];
+    $d_to = $_POST['d_to'];
 
 ?>
 
 <?php
-   
-        $date1= "$yr-$mon-31";
-        $date2= "$yr-$mon-01";
+        
+        $date1= $d_from;
+        $date2= $d_to;
         $titlesum=0;
         $volumesum=0;
         $query1 = "Select DISTINCT books.book_type ,COUNT(books.book_type)AS titles,SUM(legald.deposited)AS total_copies from books 
         inner join legald on books.book_id = legald.book_id WHERE legald.d_o_dep 
-        <= '$date1' AND legald.d_o_dep>='$date2' GROUP BY books.book_type";
+        <= '$date2' AND legald.d_o_dep>='$date1' GROUP BY books.book_type";
         $result = mysqli_query($config,$query1) or die("Error connecting to server");
         $i =1;
         while($row1=$result->fetch_assoc()){

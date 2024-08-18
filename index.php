@@ -39,7 +39,7 @@
         
 <div id="displaytable">
     <?php
-if ($_SESSION['sType'] == 'admin'){
+    if ($_SESSION['sType'] == 'admin'){
     include("sidebar.php");   
                           }
                        else {
@@ -48,74 +48,74 @@ if ($_SESSION['sType'] == 'admin'){
         <!--<?php include("sidebar.php"); ?>-->
     <div id="tabdiv">
      <a class="alink" href="legalentry.php"><button class = "add">New Entry <i class="fa-solid fa-plus"></i></button></a>
-         <table class="table table-bordered " id="tab">
+            <table class="table table-bordered " id="tab">
         
-            <thead>
-            <tr>
-            <th class="tab_head" scope="col">#</th>
-            <th class="tab_head" scope="col">Title</th>
-            <th class="tab_head" scope="col">Author</th>
-            <th class="tab_head" scope="col">Publishers Name</th>
-            <th class="tab_head" scope="col">ISBN/ISSN</th>
-            <th class="tab_head" scope="col">Accession No</th>
-            <th class="tab_head" scope="col">Legal Deposit No</th>
-            <th class="tab_head" scope="col">Copies Deposited</th>
-            <!--<th class="tab_head" scope="col">Remark</th>-->
-            <th class="tab_head" scope="col">Action</th>
-</tr>
-          </thead>
-            <tbody>
-               
-            <?php
-                $query = "select books.book_id, books.title, books.author, books.p_name,books.p_of_pub,books.y_of_pub,books.isbn_ssn,books.access_no,legald.l_dep_no,legald.copies_deposit,legald.contact_address,legald.remark from books inner join legald on books.book_id = legald.book_id ORDER by legald.d_o_dep DESC";
-                $result = mysqli_query($config, $query);
-                
-                        
-                    $i =1;
-                while($row = mysqli_fetch_assoc($result)){
+                    <thead>
+                    <tr>
+                    <th class="tab_head" scope="col">#</th>
+                    <th class="tab_head" scope="col">Title</th>
+                    <th class="tab_head" scope="col">Author</th>
+                    <th class="tab_head" scope="col">Publishers Name</th>
+                    <th class="tab_head" scope="col">ISBN/ISSN</th>
+                    <th class="tab_head" scope="col">Accession No</th>
+                    <th class="tab_head" scope="col">Legal Deposit No</th>
+                    <th class="tab_head" scope="col">Copies Deposited</th>
+                    <!--<th class="tab_head" scope="col">Remark</th>-->
+                    <th class="tab_head" scope="col">Action</th>
+                    </tr>
+                </thead>
+                    <tbody>
                     
-            ?>
-        
-            <tr scope="row" class="tab-row">
-             <td class="tab_data"><?php echo $i?></td>
-             <td class="tab_data"><?php echo trim($row['title'])?></td>
-             <td class="tab_data"><?php echo trim($row['author'])?></td>
-             <td class="tab_data"><?php echo trim($row['p_name'])?></td>
-             <td class="tab_data"><?php echo trim($row['isbn_ssn'])?></td>
-             <td class="tab_data"><?php echo trim($row['access_no'])?></td>
-             <td class="tab_data"><?php echo trim($row['l_dep_no'])?></td>
-             <td class="tab_data"><?php echo trim($row['copies_deposit'])?></td>
-             <!--<td class="tab_data"><?php echo trim($row['remark'])?></td>-->
-            <?php if($_SESSION['sType'] == 'admin'){ ?>
-             <td class="tab_data action_butt"><a class="btt"><button id="del" onclick = "deleted(<?php echo $row['book_id']?>)" value = "<?php echo $row['book_id']?>">Delete</button></a>
-             <a class="btt" href= "edit.php?id=<?php echo $row['book_id']?> & crazy"  ><button id="edit">Edit</button></a>
-             <a class="btt" href= "view.php?id=<?php echo $row['book_id']?> & crazy"  ><button id="edit">View</button></a>
-            </td> 
-            <?php }
-             else {?>
-             <td class="tab_data action_butt">
-             <a class="btt" href= "edit.php?id=<?php echo $row['book_id']?> & crazy"  ><button id="edit">Edit</button></a>
-             <a class="btt" href= "view.php?id=<?php echo $row['book_id']?> & crazy"  ><button id="edit">View</button></a>
+                    <?php
+                        $query = "select books.book_id, books.title, books.author, books.p_name,books.p_of_pub,books.y_of_pub,books.isbn_ssn,books.access_no,legald.l_dep_no,legald.copies_deposit,legald.contact_address,legald.remark from books inner join legald on books.book_id = legald.book_id ORDER by legald.d_o_dep DESC";
+                        $result = mysqli_query($config, $query);
+                        
+                                
+                            $i =1;
+                        while($row = mysqli_fetch_assoc($result)){
+                            
+                    ?>
+                
+                    <tr scope="row" class="tab-row">
+                    <td class="tab_data"><?php echo $i?></td>
+                    <td class="tab_data"><?php echo trim($row['title'])?></td>
+                    <td class="tab_data"><?php echo trim($row['author'])?></td>
+                    <td class="tab_data"><?php echo trim($row['p_name'])?></td>
+                    <td class="tab_data"><?php echo trim($row['isbn_ssn'])?></td>
+                    <td class="tab_data"><?php echo trim($row['access_no'])?></td>
+                    <td class="tab_data"><?php echo trim($row['l_dep_no'])?></td>
+                    <td class="tab_data"><?php echo trim($row['copies_deposit'])?></td>
+                    <!--<td class="tab_data"><?php echo trim($row['remark'])?></td>-->
+                    <?php if($_SESSION['sType'] == 'admin'){ ?>
+                    <td class="tab_data action_butt"><a class="btt"><button id="del" onclick = "deleted(<?php echo $row['book_id']?>)" value = "<?php echo $row['book_id']?>">Delete</button></a>
+                    <a class="btt" href= "edit.php?id=<?php echo $row['book_id']?> & crazy"  ><button id="edit">Edit</button></a>
+                    <a class="btt" href= "view.php?id=<?php echo $row['book_id']?> & crazy"  ><button id="edit">View</button></a>
+                    </td> 
+                    <?php }
+                    else {?>
+                    <td class="tab_data action_butt">
+                    <a class="btt" href= "edit.php?id=<?php echo $row['book_id']?> & crazy"  ><button id="edit">Edit</button></a>
+                    <a class="btt" href= "view.php?id=<?php echo $row['book_id']?> & crazy"  ><button id="edit">View</button></a>
 
-             <?php }?>
-             
-            </tr>
-            <?php 
-            $i++;
-            } ?>
-            </tbody>
+                    <?php }?>
+                    
+                    </tr>
+                    <?php 
+                    $i++;
+                    } ?>
+                    </tbody>
             </table>
         </div>
 
 
-    </div>
-    <div id="mod" class="modal">
-            <p>Are you sure you want to delete ?</p>
-            <p id="weyre"></p>
-            <a><button id="nobtn" onclick=dissappear()>NO</button></a>
-            <a id="yesA" href="delete.php?id=<?php echo $row['book_id']?>"><button id="yesbtn">YES <p id="lori"></p></button></a>
+</div>
+                <div id="mod" class="modal">
+                        <p>Are you sure you want to delete ?</p>
+                        <p id="weyre"></p>
+                        <a><button id="nobtn" onclick=dissappear()>NO</button></a>
+                        <a id="yesA" href="delete.php?id=<?php echo $row['book_id']?>"><button id="yesbtn">YES <p id="lori"></p></button></a>
 
-        </div>
+                    </div>
 <script>
     let you  = document.getElementById('mod');
     let you2  = document.getElementById('weyre');
