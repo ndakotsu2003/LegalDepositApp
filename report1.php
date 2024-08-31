@@ -38,35 +38,16 @@
             <div id="top_part">
                         <div id="r_header"><span>REPORTS</span></div>
                     <div id="date">
-                        <p id="instruction">Please Select the month and year</p>
+                        <p id="instruction">Please Select the range you want reported</p>
                         <div id="selectt">
-                            <input id="d_from" type="date">
-                            <input id="d_to" type="date">
-                            <input id="see" type="text" placeholder="make we see">
-                            <label for="month_drop" id="monthlabel">Month</label>
-                            <select name="mType" id="month_drop">
-                            
-                                <option value=" "></option>
-                                <option value="01">January</option>
-                                <option value="02">February</option>
-                                <option value="03">March</option>
-                                <option value="04">April</option>
-                                <option value="05">May</option>
-                                <option value="06">June</option>
-                                <option value="07">July</option>
-                                <option value="08">August</option>
-                                <option value="09">September</option>
-                                <option value="10">October</option>
-                                <option value="11">November</option>
-                                <option value="12">December</option>
-
-                            </select>
-
-                            <label for="year_drop" id="yearlabel">Year</label>
-                            <select name="yType" id="year_drop" onclick="populate_year()">
-                            
-                                <option value=" "></option>
-                            </select>
+                            <div id="left_select">
+                                <span class="sp">From :</span>
+                                <input id="d_from" type="date">
+                           </div>
+                           <div id="right_select">
+                                <span class="sp">To :</span>
+                                <input id="d_to" type="date">
+                           </div>
                         </div>
                         <div id="generate">
                             <button onclick="populate()">Generate</button>
@@ -75,7 +56,7 @@
                 </div>
                 <div id="report">
                     <div id="table1">
-                        <p>the total number of books is <span id="fillu"></span><p>
+                        <p>A total of <span id="fillu"></span>  titles were recieved in the period between <span id="fr"></span> and <span id="to"></span>. <p>
                             <table class="table table-bordered" id="tab_1">
                                 <thead>
                                     
@@ -106,6 +87,7 @@
 
                     </div>
                     <div id="table2">
+                    <p>Statistics Report for the deposit of materials by State between the period of <span id="fr1"></span> and <span id="to1"></span>. <p>
                             <table class="table table-bordered" id="tab_2">
                                 <thead>
                                     
@@ -139,6 +121,7 @@
 
 
                     <div id="table3">
+                    <p>A total of <span id="fillu_1"></span> volumes in <span id="span"></span> titles of Monographs and Serials were documented. <p>
                             <table class="table table-bordered" id="tab_3">
                                 <thead>
                                     
@@ -191,8 +174,8 @@
 
         function populate(){
             firsttable();
-            //secondtable();
-            //thirdtable();
+           secondtable();
+            thirdtable();
         }
         function firsttable(){
             var d_from = document.getElementById("d_from").value;
@@ -212,19 +195,24 @@
 			success: function(data){
                            
              $("#tab1").html(data);
+             $vv = $("#fill_up1").text();
+             //$("#see").text($vv);
+             $("#fillu").html($vv);
+             $("#fr").html(d_from);
+             $("#to").html(d_to);
             }
 		});
        
         }
 
         function secondtable(){
-            var mon = document.getElementById("month_drop").value;
-            var yr = document.getElementById("year_drop").value;
+            var d_from = document.getElementById("d_from").value;
+            var d_to = document.getElementById("d_to").value;
             $.ajax({
 			url: "rep2.php",
 			method: "POST",
-			data: {mon: mon,
-                    yr: yr,
+			data: {d_from: d_from,
+                    d_to: d_to,
                 action: "populate_second"
             
                   }
@@ -232,19 +220,23 @@
 			success: function(data){
                            
              $("#tab2").html(data);
+             $("#fr1").html(d_from);
+             $("#to1").html(d_to);
+             
+
             }
 		});
         }
 
 
         function thirdtable(){
-            var mon = document.getElementById("month_drop").value;
-            var yr = document.getElementById("year_drop").value;
+            var d_from = document.getElementById("d_from").value;
+            var d_to = document.getElementById("d_to").value;
             $.ajax({
 			url: "rep3.php",
 			method: "POST",
-			data: {mon: mon,
-                    yr: yr
+			data: {d_from: d_from,
+                    d_to: d_to
                 
             
                   }
@@ -252,6 +244,10 @@
 			success: function(data){
                            
              $("#tab3").html(data);
+             $vv = $("#fill_up").text();
+             $uu = $("#fillt").text();
+             $("#fillu_1").html($vv);
+             $("#span").text($uu);
             }
 		});
         }

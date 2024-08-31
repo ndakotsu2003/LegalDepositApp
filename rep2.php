@@ -6,19 +6,19 @@
     
     
     $user_data = check_login($config);
-    $mon = $_POST['mon'];
-    $yr = $_POST['yr'];
-
+    $d_from = $_POST['d_from'];
+    $d_to = $_POST['d_to'];
 ?>
 
 <?php
+        $date1= $d_from;
+        $date2= $d_to;
         $titlesum=0;
         $volumesum=0;
-        $date1= "$yr-$mon-31";
-        $date2= "$yr-$mon-01";
+      
         $query1 = "Select  legald.s_o_dep , COUNT(legald.s_o_dep)AS titles,SUM(legald.deposited)AS total_copies from legald 
-        WHERE legald.d_o_dep <= '$date1' 
-        AND legald.d_o_dep>='$date2' GROUP BY legald.s_o_dep";
+        WHERE legald.d_o_dep <= '$date2' 
+        AND legald.d_o_dep>='$date1' GROUP BY legald.s_o_dep";
         $result = mysqli_query($config,$query1) or die("Error connecting to server");
         $i =1;
         while($row1=$result->fetch_assoc()){

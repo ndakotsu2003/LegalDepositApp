@@ -55,6 +55,7 @@ if ($_SESSION['sType'] == 'admin'){
             <th class="tab_head" scope="col">Title</th>
             <th class="tab_head" scope="col">Author</th>
             <th class="tab_head" scope="col">Publishers Name</th>
+            <th class="tab_head" scope="col">Type</th>
             <th class="tab_head" scope="col">Copies Deposited</th>
             <th class="tab_head" scope="col">Remaining Deposit</th>
             <th class="tab_head" scope="col">Action</th>
@@ -63,7 +64,7 @@ if ($_SESSION['sType'] == 'admin'){
             <tbody>
                
             <?php
-                $query = "select books.book_id, books.title, books.author, books.p_name,books.p_of_pub,books.y_of_pub,books.isbn_ssn,books.access_no,legald.l_dep_no,legald.copies_deposit,legald.deposited,legald.contact_address,legald.remark from books inner join legald on books.book_id = legald.book_id ORDER by legald.d_o_dep DESC";
+                $query = "select books.book_id, books.title, books.author, books.p_name,books.p_of_pub,books.y_of_pub,books.isbn_ssn,books.access_no,legald.l_dep_no,legald.copies_deposit,legald.deposited,legald.dep_type,legald.contact_address,legald.remark from books inner join legald on books.book_id = legald.book_id ORDER by legald.d_o_dep DESC";
                 $result = mysqli_query($config, $query);
                 
                         
@@ -78,12 +79,14 @@ if ($_SESSION['sType'] == 'admin'){
              <td class="tab_data"><?php echo trim($row['title'])?></td>
              <td class="tab_data"><?php echo trim($row['author'])?></td>
              <td class="tab_data"><?php echo trim($row['p_name'])?></td>
-             <td class="tab_data"><?php echo trim($row['copies_deposit'])?></td>
+             <td class="tab_data"><?php echo trim($row['dep_type'])?></td>
+             <td class="tab_data"><?php echo trim($row['deposited'])?></td>
              <td class="tab_data"><?php echo trim($row['copies_deposit'] - $row['deposited'])?></td>
             <?php if($_SESSION['sType'] == 'admin'){ ?>
-             <td class="tab_data action_butt"><a class="btt"><button id="del" onclick = "deleted(<?php echo $row['book_id']?>)" value = "<?php echo $row['book_id']?>">Delete</button></a>
+             <td class="tab_data action_butt">
+                <a class="btt"><button id="del" onclick = "deleted(<?php echo $row['book_id']?>)" value = "<?php echo $row['book_id']?>">Delete</button></a>
              <a class="btt" href= "edit.php?id=<?php echo $row['book_id']?> & crazy"  ><button id="edit">Edit</button></a>
-             <a class="btt" href= "view.php?id=<?php echo $row['book_id']?> & crazy"  ><button id="edit">View</button></a>
+             <a class="btt" href= "view.php?id=<?php echo $row['book_id']?> & crazy"  ><button id="view">View</button></a>
             </td> 
             <?php }
              else {?>

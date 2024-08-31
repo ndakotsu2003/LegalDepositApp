@@ -12,13 +12,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <link rel="stylesheet" href="./bootstrap-5.3.2-dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="./bootstrap-5.3.2-dist/css/dtcss/dataTables.bootstrap5.css">
+    <link rel="stylesheet" href="./fontawesome-free-6.5.1-web/css/all.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <title>View</title>
 </head>
 <body>
     <header>
-
+       <?php include("topbarr.php"); ?>
     </header>
     <div class="contain">
+    <?php if ($_SESSION['sType'] == 'admin'){
+                        include("sidebar.php");   
+                          }
+                       else {
+                        include("sidebar1.php");
+                       } 
+            ?>
 
         <div class="displayarea">
             <?php 
@@ -71,17 +83,23 @@
             <div class="row">
                 <p>REAMARKS : <?php echo $row2['remark']?></p>
             </div>
-
-        </div>
-             <?php } ?>
+            <?php } ?>
 
             <div id="buttons">
             <a class=><button id="print">Print Receipt</button></a>
             <a class="btt" href= "edit.php?id=<?php echo $b_id?> & crazy"  ><button id="edit">Edit</button></a>
         
             </div>
-    </div>
 
+        </div>
+             
+
+            
+    </div>
+    <script src="jquery/jquery3.7.js"></script>
+     <script src="./bootstrap-5.3.2-dist/js/bootstrap.min.js"></script>
+     <script src="./bootstrap-5.3.2-dist/js/dtjs/dataTables.js"></script>
+     <script src="./bootstrap-5.3.2-dist/js/dtjs/dataTables.bootstrap5.js"></script>
     
 </body>
 </html>

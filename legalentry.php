@@ -22,9 +22,10 @@
     $state_dep = $_POST["sDepo"];
     $con_add = $_POST["c_add"];
     $remarks = $_POST["remarks"];
+    $user_id = $_SESSION['userName'];
 
     $query = "insert  into books (book_id,title,author,p_name,p_of_pub,y_of_pub,isbn_ssn,access_no,book_type) values('$book_id','$book_title','$authorname','$pub_name','$placeofpub','$y_pub','$isbn','$acc_no','$book_cat');";
-    $query2="insert into legald (l_dep_no,copies_deposit,deposited,dep_type,s_o_dep,d_o_dep,contact_address,remark, book_id) values('$deposit_no','$booktype', '$aDeposited','$dep_type','$state_dep','$date_dep','$con_add','$remarks','$book_id');";
+    $query2="insert into legald (l_dep_no,copies_deposit,deposited,dep_type,s_o_dep,d_o_dep,contact_address,remark, book_id, user_id) values('$deposit_no','$booktype', '$aDeposited','$dep_type','$state_dep','$date_dep','$con_add','$remarks','$book_id', '$user_id');";
     mysqli_query($config,$query) or die("Error connecting to server");
     mysqli_query($config,$query2) or die("Error connecting to server");
 
@@ -71,6 +72,12 @@ if ($_SESSION['sType'] == 'admin'){
                 </div>
                 <div class="inputentry">
                     <input type="text" class="legInput" alt="Authors Name" placeholder="Author/Editors Name" name="authname" id="authname">
+                </div>
+                <div class="inputentry">
+                    <input type="email" class="legInput" alt="Email Address" placeholder="Email Address" name="eadd" id="eadd">
+                </div>
+                <div class="inputentry">
+                    <input type="text" class="legInput" alt="Phone Number" placeholder="Telephone/Mobile Number" name="mnumber" id="mnumber">
                 </div>
                 <div class="inputentry">
                     <input type="text" class="legInput" alt="Publishers Name" placeholder="Publishers Name" name="p_name" id="p_name">

@@ -68,6 +68,7 @@
                        else {
                         include("sidebar1.php");
                        } ?>
+                       
         <div class="form">
             <?php 
                     if(isset($_GET['id'])){
@@ -134,6 +135,7 @@
 
                     </select>
                     <input type="text" class="legInput" value=<?php echo $row2['deposited']?> placeholder="Amount Deposited"name="deposited" id="deposited">
+                    <button type="button" value="<?php echo $row2['l_dep_no']?>" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" >Add</button>
                     <input type="hidden" value=<?php echo $row2['dep_type']?> name="gui" id="gui">
                 </div>
                 <div class="soDeposit">
@@ -191,12 +193,37 @@
                 <div id="subbutton">
                     <button type="submit" id="subLeg" name="submit">Update</button>
                 </div>
+
+               
             </form>
                         <?php } ?>
-        </div>
 
+            
+            </div>
+            
+      
+        </div>
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    ...
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                    <button type="button" class="btn btn-primary">Save changes</button>
+                                </div>
+                         </div>
+                    </div>
+                </div>
         
     </div>
+
+                
     <script>
         document.getElementById('bookt').addEventListener("click",type,true);
          function type(){

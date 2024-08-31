@@ -46,7 +46,7 @@
    <td style= 'text-align: center'></td>
    <td style= 'text-align: center'><?php echo "Total"?></td>
    <td style= 'text-align: center'><?php echo $titlesum?></td>
-   <td style= 'text-align: center' id="fill_up"><?php echo $volumesum?></td>
+   <td style= 'text-align: center' id="fill_up1"><?php echo $volumesum?></td>
    </tr>
 <?php
 ?>
