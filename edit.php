@@ -16,6 +16,8 @@
    
     $book_title = $_POST['b_title'];
     $authorname = $_POST['authname'];
+    $email = $_POST['email'];
+    $p_number = $_POST['p_number'];
     $pub_name= $_POST['p_name'];
     $placeofpub = $_POST['p_publication'];
     $y_pub = $_POST['y_publication'];
@@ -31,7 +33,7 @@
     $con_add = $_POST["c_add"];
     $remarks = $_POST["remarks"];
 
-    $query = "update   books SET title ='$book_title',author ='$authorname' ,p_name ='$pub_name',p_of_pub ='$placeofpub',y_of_pub =$y_pub,isbn_ssn = '$isbn',access_no = '$acc_no',book_type='$book_cat' where book_id = $b_id";
+    $query = "update   books SET title ='$book_title',author ='$authorname', email = '$email',p_number = '$p_number',p_name ='$pub_name',p_of_pub ='$placeofpub',y_of_pub =$y_pub,isbn_ssn = '$isbn',access_no = '$acc_no',book_type='$book_cat' where book_id = $b_id";
     $query2="update legald SET l_dep_no='$deposit_no' ,copies_deposit='$booktype',deposited='$aDeposited',dep_type='$dep_type',s_o_dep ='$state_dep', d_o_dep='$date_dep', contact_address='$con_add',remark='$remarks' where book_id=$b_id";
     mysqli_query($config,$query) or die("Error connecting to server");
     mysqli_query($config,$query2) or die("Error connecting to server");
@@ -53,6 +55,8 @@
     <link rel="stylesheet" href="./bootstrap-5.3.2-dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="./fontawesome-free-6.5.1-web/css/all.min.css">
     <link rel="stylesheet" type="text/css" href="style.css">
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <title>Legal Deposit</title>
 </head>
 <body>
@@ -73,7 +77,7 @@
             <?php 
                     if(isset($_GET['id'])){
                             
-                        $que ="select books.book_id, books.title, books.author, books.p_name,books.p_of_pub,books.y_of_pub,books.isbn_ssn,books.access_no,books.book_type,legald.l_dep_no,legald.copies_deposit,legald.deposited,legald.dep_type,legald.s_o_dep,legald.d_o_dep,legald.contact_address,legald.remark from books inner join legald on books.book_id = legald.book_id where books.book_id = '$b_id'";
+                        $que ="select books.book_id, books.title, books.author,books.email, books.p_number, books.p_name,books.p_of_pub,books.y_of_pub,books.isbn_ssn,books.access_no,books.book_type,legald.l_dep_no,legald.copies_deposit,legald.dep_type,legald.s_o_dep,legald.d_o_dep,legald.contact_address,legald.remark ,SUM(depo_history.deposited) as tots from books inner join legald on books.book_id = legald.book_id inner join depo_history on legald.l_dep_no = depo_history.l_dep_no where books.book_id = '$b_id'";
                         $result = mysqli_query($config, $que); 
 
                         $row2= mysqli_fetch_assoc($result);
@@ -88,6 +92,12 @@
                 </div>
                 <div class="inputentry">
                     <input type="text" class="legInput" alt="Authors Name" placeholder="Author/Editors Name" value =<?php echo $row2['author']?> name="authname" id="authname">
+                </div>
+                <div class="inputentry">
+                    <input type="text" class="legInput" alt="Email Address" placeholder="Email Address" value =<?php echo $row2['email']?> name="email" id="email" >
+                </div>
+                <div class="inputentry">
+                    <input type="text" class="legInput" alt="Phone Number" placeholder="Phone Number" value =<?php echo $row2['p_number']?> name="p_number" id="p_number">
                 </div>
                 <div class="inputentry">
                     <input type="text" class="legInput" alt="Publishers Name" placeholder="Publishers Name" value =<?php echo $row2['p_name']?> name="p_name" id="p_name">
@@ -126,7 +136,7 @@
                 </div>
                 <div class="booktype">
                     <label for="bookt" id="booklabel">Type</label>
-                    <select name="bType" id="bookt" >
+                    <select name="bType" id="bookt"  readonly>
                         <?php if ($row2['copies_deposit'] !="10" && $row2['copies_deposit'] !="3" && $row2['copies_deposit'] !="25") {?>
                         <option value="" selected></option> <?php } ?>
                         <option value="3" <?php if($row2['copies_deposit'] == "3"){ echo 'selected';} ?>>Private</option>
@@ -134,8 +144,10 @@
                         <option value="25" <?php if($row2['copies_deposit'] == "25"){ echo 'selected';} ?>>Federal</option>
 
                     </select>
-                    <input type="text" class="legInput" value=<?php echo $row2['deposited']?> placeholder="Amount Deposited"name="deposited" id="deposited">
-                    <button type="button" value="<?php echo $row2['l_dep_no']?>" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" >Add</button>
+                    <input type="text" class="legInput" value=<?php echo $row2['tots']?> placeholder="Amount Deposited"name="deposited" id="deposited" readonly>
+                    <input type="hidden" value=<?php echo $row2['copies_deposit']?> name="c_d" id="c_d" >
+                    <button type="button" value="<?php echo $row2['l_dep_no']?>" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" id="tef" onclick= "testter('<?php echo $row2['l_dep_no']?>')">Add</button>
+                    
                     <input type="hidden" value=<?php echo $row2['dep_type']?> name="gui" id="gui">
                 </div>
                 <div class="soDeposit">
@@ -196,7 +208,7 @@
 
                
             </form>
-                        <?php } ?>
+                       
 
             
             </div>
@@ -207,20 +219,27 @@
                     <div class="modal-dialog modal-dialog-centered">
                         <div class="modal-content">
                                 <div class="modal-header">
-                                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                                    <h5 class="modal-title" id="exampleModalLabel">Deposit</h5>
                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                 </div>
                                 <div class="modal-body">
-                                    ...
+                                    <p id = "weyre"></p>
+                                <div id= "add_depo">
+                                    <p id="error"></p>
+                                   <div> <label> Amount Remaining: </label><input type="text" name="amount_adep" id="amount_adep" readonly></div>
+                                    <div><label>Deposting: </label><input type="text" name="amount_todep" id="amount_todep"></div>
                                 </div>
+
+                                  
+                        </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                    <button type="button" class="btn btn-primary">Save changes</button>
-                                </div>
-                         </div>
+                                    <button type="button" class="btn btn-primary"  onclick= "updater('<?php echo $row2['l_dep_no']?>','<?php echo $b_id?>')">Save changes</button>
+                                  </div>
+                        </div>
                     </div>
-                </div>
-        
+         </div>
+         <?php } ?>
     </div>
 
                 
@@ -237,6 +256,74 @@
             else{
                 document.getElementById("gui").value= "Federal";
             }
+        }
+
+        window.onload = function(){
+            var btn = document.getElementById('tef');
+            var a  = document.getElementById('c_d').value;
+            var b = document.getElementById('deposited').value;
+           
+            if (a == b){
+                    btn.disabled = true;
+            }
+            else{
+                    btn.disabled = false;
+            }
+         }
+        
+
+        function trial(){
+            var cc = document.getElementById('tef').value;
+            document.getElementById('weyre').innerHTML= cc;
+        } 
+
+        function testter(check){
+            console.log(check);
+            $.ajax({
+			url: "addition.php",
+			method: "POST",
+            data: {pop_out: true,
+                check: check
+                    
+              }
+            ,
+			success: function(data){
+                           
+             $("#amount_adep").val(data);
+             
+            }
+		});
+        }
+
+        function updater(legD, bookId){
+            console.log('it passed the test before');
+            var add = $('#amount_todep').val();
+            var sub = $('#amount_adep').val();
+            console.log(add + sub);
+           if (add <= sub && add != '' && add != 0){
+           
+            $.ajax({
+			url: "usecase.php",
+			method: "POST",
+            data: {update_dep: true,
+                legD: legD,
+                bookId: bookId,
+                add: add
+                    
+              }
+            ,
+			success: function(reply){
+                           
+             $('#error').html(reply);
+            
+             
+            }
+		});
+    }
+    else{
+        $('#error').html("Entry not valid");
+
+    }
         }
     </script>
     <script>

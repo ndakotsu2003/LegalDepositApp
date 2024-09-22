@@ -64,7 +64,7 @@ if ($_SESSION['sType'] == 'admin'){
             <tbody>
                
             <?php
-                $query = "select books.book_id, books.title, books.author, books.p_name,books.p_of_pub,books.y_of_pub,books.isbn_ssn,books.access_no,legald.l_dep_no,legald.copies_deposit,legald.deposited,legald.dep_type,legald.contact_address,legald.remark from books inner join legald on books.book_id = legald.book_id ORDER by legald.d_o_dep DESC";
+                $query = "select books.book_id, books.title, books.author, books.email, books.p_number, books.p_name,books.p_of_pub,books.y_of_pub,books.isbn_ssn,books.access_no,legald.l_dep_no,legald.copies_deposit,legald.deposited,legald.dep_type,legald.contact_address,legald.remark from books inner join legald on books.book_id = legald.book_id ORDER by legald.d_o_dep DESC";
                 $result = mysqli_query($config, $query);
                 
                         
@@ -75,37 +75,113 @@ if ($_SESSION['sType'] == 'admin'){
             ?>
         
             <tr scope="row" class="tab-row">
-             <td class="tab_data"><?php echo $i?></td>
-             <td class="tab_data"><?php echo trim($row['title'])?></td>
-             <td class="tab_data"><?php echo trim($row['author'])?></td>
-             <td class="tab_data"><?php echo trim($row['p_name'])?></td>
-             <td class="tab_data"><?php echo trim($row['dep_type'])?></td>
-             <td class="tab_data"><?php echo trim($row['deposited'])?></td>
-             <td class="tab_data"><?php echo trim($row['copies_deposit'] - $row['deposited'])?></td>
-            <?php if($_SESSION['sType'] == 'admin'){ ?>
-             <td class="tab_data action_butt">
-                <a class="btt"><button id="del" onclick = "deleted(<?php echo $row['book_id']?>)" value = "<?php echo $row['book_id']?>">Delete</button></a>
-             <a class="btt" href= "edit.php?id=<?php echo $row['book_id']?> & crazy"  ><button id="edit">Edit</button></a>
-             <a class="btt" href= "view.php?id=<?php echo $row['book_id']?> & crazy"  ><button id="view">View</button></a>
-            </td> 
-            <?php }
-             else {?>
-             <td class="tab_data action_butt">
-             <a class="btt" href= "edit.php?id=<?php echo $row['book_id']?> & crazy"  ><button id="edit">Edit</button></a>
-             <a class="btt" href= "view.php?id=<?php echo $row['book_id']?> & crazy"  ><button id="edit">View</button></a>
-
-             <?php }?>
-             
+                <td class="tab_data"><?php echo $i?></td>
+                <td class="tab_data"><?php echo trim($row['title'])?></td>
+                <td class="tab_data"><?php echo trim($row['author'])?></td>
+                <td class="tab_data"><?php echo trim($row['p_name'])?></td>
+                <td class="tab_data"><?php echo trim($row['dep_type'])?></td>
+                <td class="tab_data"><?php echo trim($row['deposited'])?></td>
+                <td class="tab_data"><?php echo trim($row['copies_deposit'] - $row['deposited'])?></td>
+            
+                <td class="tab_data action_butt">
+                    
+                    <button type ="button"onclick = "mail('<?php echo $row['email']?>')" id="reminder"> <i class="fa-regular fa-envelope"></i></button>
+                    <a class="btt" href= "edit.php?id=<?php echo $row['book_id']?> & crazy"  ><button id="edit">Edit</button></a>
+                    <button type="button" value="" class=" " data-bs-toggle="modal" data-bs-target="#exampleModal" id="view_btn" onclick= "view_details(<?php echo $row['book_id']?>)">View</button>
+                </td> 
             </tr>
             <?php 
             $i++;
             } }?>
             </tbody>
             </table>
-        </div>
 
+            
+            <div id= "ttx"></div>
+            <p id ="tty">BOZO</p>
+            </div>
+                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">View Record</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <p id = "display_message"></p>
+                                    <div id= "Records">
+                                        <p id="dep_details">Legal Deposit Details</p>
+                                    <div id= "view_records"> 
+
+                                        </div>
+
+                                    
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                        
+                                    </div>
+                            </div>
+                        </div>
+            </div>
+          
 
     </div>
+
+    <script>
+        function mail(email){
+            console.log(email);
+            $.ajax({
+
+            url: "mail.php",
+			method: "POST",
+            data: {mail: true,
+                email: email
+                    
+              }
+            ,
+			success: function(reply){
+                           
+                $("#tty").text(reply);
+             
+            }
+            });
+        }
+
+        function view_details(see){
+
+       
+                $.ajax({
+                    url: "view.php",
+                    method: "POST",
+                    data: {
+                        pop_out3: true,
+                        see: see
+                            
+                        }
+                    ,
+                    success: function(reply){
+                                    
+                    $('#view_records').html(reply);
+                    
+                    }
+
+                });
+
+        }
+
+        function print(){
+        console.log("print");
+		var _html = $('#receipt').clone();
+		var newWindow = window.open(" "," ","menubar=no,scrollbars=yes,resizable=yes,width=700,height=600");
+		newWindow.document.write(_html.html())
+		newWindow.document.close()
+		newWindow.focus()
+		newWindow.print()
+		setTimeout(function(){;newWindow.close();}, 1500);
+	}
+    
+        </script>
    
 
     <script src="jquery/jquery3.7.js"></script>

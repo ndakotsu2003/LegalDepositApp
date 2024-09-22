@@ -37,43 +37,84 @@ if ($_SESSION['sType'] == 'admin'){
         
         <div id="tabdiv">
         <a class="alink" href="register.php"><button class="add">New User <i class="fa-solid fa-plus"></i></button></a>
-    <table class="table table-bordered" id="tab">
-        <p id="rre">blank</p>
-        <thead class="">
-            <th class="tab_head">#</th>
-            <th class="tab_head">First Name</th>
-            <th class="tab_head">Surname</th>
-            <th class="tab_head">Type</th>
-            <th class="tab_head">Action</th>
-        </thead>
-        <tbody>
-            <?php
-                $query = "select * from users";
-                $result = mysqli_query($config, $query);
-                
-                        
-                    $i =1;
-                while($row = mysqli_fetch_assoc($result)){
+                <table class="table table-bordered" id="tab">
+                    <thead class="">
+                        <th class="tab_head">#</th>
+                        <th class="tab_head">First Name</th>
+                        <th class="tab_head">Surname</th>
+                        <th class="tab_head">Type</th>
+                        <th class="tab_head">Action</th>
+                    </thead>
+                    <tbody>
+                        <?php
+                            $query = "select * from users";
+                            $result = mysqli_query($config, $query);
+                            
+                                    
+                                $i =1;
+                            while($row = mysqli_fetch_assoc($result)){
+                                
+                        ?>
                     
-            ?>
-        
-            <tr>
-             <td class="tab_data"><?php echo $i?></td>
-             <td class="tab_data"><?php echo $row['f_name']?></td>
-             <td class="tab_data"><?php echo $row['surname']?></td>
-             <td class="tab_data"><?php echo $row['type']?></td>
-             <!--<td class="tab_data"><a><button id="del" onclick = "deleted(<?php echo $row['user_id']?>)"  value = "<?php echo $row['user_id']?>">Delete </button></a><a href= "register.php?id=<?php echo $row['user_id']?> & crazy"  ><button >Edit</button></a></td> -->
-             <td class="tab_data action_butt"><a class="btt"><button id="del1" onclick = "deleted('<?php echo $row['user_id']?>')" value = "<?php echo $row['user_id']?>">Delete</button></a>
-             <a class="btt" href= "register.php?id=<?php echo $row['user_id']?> & crazy"  ><button id="edit1">Edit</button></a>
-            </td> 
-            </tr>
-        <?php 
-        $i++;
-        } ?>
-        </tbody>
-</table>
+                        <tr>
+                        <td class="tab_data"><?php echo $i?></td>
+                        <td class="tab_data"><?php echo $row['f_name']?></td>
+                        <td class="tab_data"><?php echo $row['surname']?></td>
+                        <td class="tab_data"><?php echo $row['type']?></td>
+                        <!--<td class="tab_data"><a><button id="del" onclick = "deleted(<?php echo $row['user_id']?>)"  value = "<?php echo $row['user_id']?>">Delete </button></a><a href= "register.php?id=<?php echo $row['user_id']?> & crazy"  ><button >Edit</button></a></td> -->
+                        <td class="tab_data action_butt"><a class="btt"><button id="del1" onclick = "deleted('<?php echo $row['user_id']?>')" value = "<?php echo $row['user_id']?>">Delete</button></a>
+                        <a class="btt" ><button id="edit1" data-bs-toggle="modal" data-bs-target="#exampleModal" onclick="fill('<?php echo $row['user_id']?>', '<?php echo $row['f_name']?>', '<?php echo $row['type']?>')" >Edit</button></a>
+                        </td> 
+                        </tr>
+                        <?php 
+                    $i++;
+                    } ?>
+                    </tbody>
+             </table>
+            
+             <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">User Info</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <p id = "weyre"></p>
+                                <div id= "add_depo">
+                                    <p id="error"></p>
+                                    <div class="inputfield">
+                                        <p>USERNAME:  <span id="username"></span></p>
+                                        <p>FIRSTNAME:  <span id="firstname"></span></p>
+                                        <p>TYPE:  <span id="s_type"></span></p>
+                                    </div>
+                                    <div id="update_h"><p>Update Staff Type</p></div>
+                                    <div id="update_t">
+                                        
+                                        <label for="stafft1" id="stafflabel1">Type</label>
+                                                <select name="sType" id="stafft1">
+                                                
+                                                    <option value=" "></option>
+                                                    <option value="staff">Staff</option>
+                                                    <option value="admin">Admin</option>
 
-    </div>
+                                                </select>
+                                    
+                                </div>
+                            </div>
+
+                                  
+                        </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                    <button type="button" class="btn btn-primary"  onclick= "upload()">Save changes</button>
+                                  </div>
+                        </div>
+                    </div>
+                </div>
+
+                
+        </div>
     </div>
     
 <script>
@@ -116,6 +157,39 @@ if ($_SESSION['sType'] == 'admin'){
         
     }
     
+    }
+
+    function fill(u_name, f_name, s_type){
+        document.getElementById('username').innerHTML = u_name;
+        document.getElementById('firstname').innerHTML = f_name;
+        document.getElementById('s_type').innerHTML = s_type;
+       
+    }
+    function upload(){
+        var user_id = document.getElementById('username').innerHTML;
+        var new_type = document.getElementById('stafft1').value;
+        console.log(new_type + user_id);
+        $.ajax({
+            url: "user_edit.php",
+			method: "POST",
+            data: {popT: true,
+               user_id: user_id,
+               new_type: new_type
+                    
+              }
+            ,
+			success: function(reply){
+                           
+             if(reply ==1){
+                alert("Success");
+             }else{
+                alert("fail");
+             }
+             
+             
+            }
+
+        });
     }
     </script>
     </script>

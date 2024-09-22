@@ -8,6 +8,8 @@
     $book_id = randomize();
     $book_title = $_POST['b_title'];
     $authorname = $_POST['authname'];
+    $email = $_POST['email'];
+    $p_number = $_POST['p_number'];
     $pub_name= $_POST['p_name'];
     $placeofpub = $_POST['p_publication'];
     $y_pub = $_POST['y_publication'];
@@ -23,11 +25,16 @@
     $con_add = $_POST["c_add"];
     $remarks = $_POST["remarks"];
     $user_id = $_SESSION['userName'];
+    $date = date('Y-m-d');
 
-    $query = "insert  into books (book_id,title,author,p_name,p_of_pub,y_of_pub,isbn_ssn,access_no,book_type) values('$book_id','$book_title','$authorname','$pub_name','$placeofpub','$y_pub','$isbn','$acc_no','$book_cat');";
+    $query = "insert  into books (book_id,title,author,email, p_number, p_name,p_of_pub,y_of_pub,isbn_ssn,access_no,book_type) values('$book_id','$book_title','$authorname','$email','$p_number','$pub_name','$placeofpub','$y_pub','$isbn','$acc_no','$book_cat');";
     $query2="insert into legald (l_dep_no,copies_deposit,deposited,dep_type,s_o_dep,d_o_dep,contact_address,remark, book_id, user_id) values('$deposit_no','$booktype', '$aDeposited','$dep_type','$state_dep','$date_dep','$con_add','$remarks','$book_id', '$user_id');";
+    $query3 = "insert into depo_history(deposited, l_dep_no, book_id)values ('$aDeposited','$deposit_no','$book_id','$date')";
     mysqli_query($config,$query) or die("Error connecting to server");
     mysqli_query($config,$query2) or die("Error connecting to server");
+    mysqli_query($config,$query3) or die("Error connecting to server");
+
+   
 
    
    
@@ -74,10 +81,10 @@ if ($_SESSION['sType'] == 'admin'){
                     <input type="text" class="legInput" alt="Authors Name" placeholder="Author/Editors Name" name="authname" id="authname">
                 </div>
                 <div class="inputentry">
-                    <input type="email" class="legInput" alt="Email Address" placeholder="Email Address" name="eadd" id="eadd">
+                    <input type="email" class="legInput" alt="Email Address" placeholder="Email Address" name="email" id="email">
                 </div>
                 <div class="inputentry">
-                    <input type="text" class="legInput" alt="Phone Number" placeholder="Telephone/Mobile Number" name="mnumber" id="mnumber">
+                    <input type="text" class="legInput" alt="Phone Number" placeholder="Telephone/Mobile Number" name="p_number" id="p_number">
                 </div>
                 <div class="inputentry">
                     <input type="text" class="legInput" alt="Publishers Name" placeholder="Publishers Name" name="p_name" id="p_name">
@@ -125,7 +132,7 @@ if ($_SESSION['sType'] == 'admin'){
 
                     </select>
                     <input type="text" class="legInput" value="" placeholder="Amount Deposited"name="deposited" id="deposited">
-                    <input type="text" value="empty" name="gui" id="gui">
+                    <input type="hidden" value="empty" name="gui" id="gui">
                 </div>
                 <div class="soDeposit">
                     <label for="soD" id="booklabel1">State of Deposit</label>

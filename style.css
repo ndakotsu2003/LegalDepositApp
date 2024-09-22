@@ -11,7 +11,7 @@
 }
 body{
     height: 100%;
-    width:100%;
+    width: 100%;
     margin: 0px;
     padding:0px;
 
@@ -19,7 +19,7 @@ body{
 }
 /*  login page  */
 #newF{
-    margin-top: 30px;
+    margin-top: 10px;
     width: 300px;
     background-color: white;    
     border: 1px solid black ;
@@ -57,16 +57,12 @@ body{
     color: white;
     border-radius: 5px;
 }
-#hdd h3{
-    width: 50px;
-    margin-left: auto;
-    margin-right: auto;
-}
+
 .body{
     border: 1px solid black;
     display: flex;
     flex-direction: row;
-    height: 700px;
+    height:100vh;
     border-radius: 10px;
 
 }
@@ -83,6 +79,25 @@ body{
     color: white;
     font-size: 50px;
 
+}
+#hdd{
+   width: 200px;
+   height: 200px;
+   border-radius: 50%;
+   display: flex;
+   flex-direction: row;
+   align-items:center;
+   justify-content: center;
+   margin-left: auto;
+   margin-right: auto;
+  
+
+}
+#logo_id{
+   width: 100%;
+   height: 100%;
+   border-radius: 50%;
+   object-fit: contain;
 }
 #left{
     width: 50%;
@@ -103,6 +118,7 @@ body{
     margin-left: auto;
     margin-right: auto;
 }
+
 
 
 
@@ -302,8 +318,77 @@ body{
     background-color: black;
     border-radius: 5px;
  }
+ /*edit page*/
+  #add_depo{
+   display: flex;
+   flex-direction: column;
+   align-items:center;
+
+  }
+  #amount_adep, #amount_todep{
+   border-radius: 5px;
+   border: solid grey 2px;
+   margin-top: 10px;
+   width: 300px;
+  }
+  #error{
+   border: solid green 3px;
+   background-color:bisque;
+  }
+  #logos{
+   display:flex;
+   flex-direction: row;
+   justify-content: center;
+   
+  }
 
  /*index page*/
+ #search{
+   display: flex;
+   justify-content:center;
+   
+   margin-top: 120px;
+ }
+ #search_field{
+   width: 500px;
+   height: 50px;
+   border: solid  rgb(106, 195, 106) 3px;
+   border-radius: 5px;
+   padding: 10px;
+ }
+ #search_field:focus{
+   outline: none;
+   border: solid  rgb(106, 195, 106) 3px !important;
+   
+ }
+ #outer{
+   border: solid  rgb(106, 195, 106) 3px;
+   border-radius: 5px;
+
+ }
+ #search_btn{
+   align-self: center;
+   width: 200px;
+   height: 40px;
+   border: none;
+   background-color:rgb(255, 255, 195);
+   transition: all 0.8s; 
+   border-radius: 5px;
+   margin-left: 30px;
+   
+ }
+
+ 
+
+#search_btn:hover{
+ background-color:rgb(254, 254, 140);
+ color: white;
+ 
+
+}
+ #tab_bod, #tab_head{
+  display: none;
+ }
  #tabdiv{
     display: flex;
     flex-direction: column;
@@ -312,10 +397,14 @@ body{
     width: 100%;
     
     
+    
  }
- #tab{
+ 
+#tab{
     margin-top: 40px;
     padding-left: 40px;
+  
+   
    
    
     
@@ -403,8 +492,23 @@ table{
     height: 100px
 
  }
+ #sec_logo{
+   height: 75%;
+   width: 200px;
+   background-color: grey;
+ 
+
+ }
+ #logo_top{
+   width: 100%;
+   height: 100%;
+   border-radius: 50%;
+   object-fit: contain;
+
+ }
  .sec{
     color: white;
+    background-color: blue;
  }
  #nametop{
     color: white;
@@ -484,6 +588,16 @@ table{
     align-items: center;
     
  }
+ .sub-bar{
+   list-style-type: none;
+   text-decoration: none;
+   
+  height: 30px;
+   padding-left: 40px;
+   display:flex;
+   align-items: center;
+
+ }
  .linker span{
     margin-left: 10px;
     
@@ -502,9 +616,10 @@ table{
         
  }
  /* buttons */
- #del,#edit,#del1,#edit1{
+ #del,#edit,#del1,#edit1,#view_btn{
     border: none;
-    font-size: 14px;
+    font-size: 14px ; 
+    height: 20px;
     
  }
  .btt, .alink{
@@ -516,7 +631,7 @@ table{
     transition: 0.8s;
 
  }
- #edit,#edit1{
+ #edit,#edit1, #view_btn{
     background-color:rgb(46, 46, 235);
     border-radius: 5px;
     color: rgb(193, 190, 190);
@@ -526,10 +641,11 @@ table{
     background-color: rgb(237, 162, 162);
     color: rgb(236, 84, 84);
  }
- #edit:hover,#edit1:hover{
+ #edit:hover,#edit1:hover, #view_btn:hover{
     background-color: rgb(119, 119, 240);
     color: white;
  }
+
 
  /* report page*/
  .contain{
@@ -615,6 +731,24 @@ table{
     width: 100%;
 
  }
+ #rep_print{
+   border: none;
+   width: 250px;
+   border-radius: 5px;
+   display: block;
+   margin: auto;
+   margin-bottom: 40px;
+   background-color: rgb(255, 255, 195);
+    border-radius: 5px;
+   cursor: pointer;
+   transition: all 0.8s;
+ }
+ #rep:hover{
+    background-color:rgb(254, 254, 140);
+    color: white;
+    
+
+ }
 
  /*profile page*/
  #prof_img{
@@ -670,3 +804,104 @@ table{
     
 
  }
+
+ /*checkers page*/
+ #email_button{
+   border: none;
+   width: 250px;
+   border-radius: 5px;
+   background-color: rgb(255, 255, 195);
+   border-radius: 5px;
+   cursor: pointer;
+   transition: all 0.8s;
+
+ }
+ #email_button:hover{
+   background-color:rgb(254, 254, 140);
+   color: white;
+   
+
+}
+ 
+
+#receipt{
+   display: none;
+}
+
+#tty{
+   background-color: black;
+   width: 100%;
+   color: white;
+}
+#reminder{
+   border: none;
+   border-radius: 5px;
+   cursor: pointer;
+   background-color: rgb(255, 255, 195);
+}
+
+/*report switch*/
+#display{
+   height: 100vh;
+    display: flex;
+    flex-direction: row;
+}
+#switch{
+   display: flex;
+   flex-direction: row;
+   justify-content: center;
+  
+   margin-left: 30px;
+   height: 100%;
+   width: 100%;
+}
+.swi_btn{
+   text-decoration: none;
+}
+.s_btn{
+   border: none;
+   background-color:rgb(255, 255, 195);
+   border-radius: 5px;
+   height:100px;
+   width: 400px;
+   margin-top: 250px;
+   cursor: pointer;
+   transition: all 0.5s;
+}
+.s_btn:hover{
+   background-color:rgb(254, 254, 140);
+   color: white;
+   
+
+}
+#checkrz{
+   margin-left: 20px;
+}
+/*Update staff type modal*/
+#update_t{
+   display: flex;
+   flex-direction: row;
+   
+   align-items: center;
+   height: 100px;
+   width: 100%;
+}
+#update_h{
+   font-size: large;
+   font-weight:bold;
+margin: auto;
+
+}
+#stafflabel1{
+   display: flex;
+   flex-direction: row;
+   justify-content: center;
+   
+   width: 60px;
+   text-align: center;
+}
+#stafft1{
+   width: 75%;
+   height: 30px;
+   border-radius: 5px;
+}

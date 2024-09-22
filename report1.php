@@ -151,6 +151,7 @@
 
                     </div>
                 </div>
+                <button id="rep_print" onclick = "print()">Print</button>
          </div>
             
     </div>
@@ -261,6 +262,17 @@
             let c = para.split('-').reverse().join('-');
             return c;
         }
+        function print(){
+        console.log("print");
+		var _html = $('#report').clone();
+		var newWindow = window.open(" "," ","menubar=no,scrollbars=yes,resizable=yes,width=700,height=600");
+		newWindow.document.write(_html.html())
+		newWindow.document.close()
+		newWindow.focus()
+		newWindow.print()
+		setTimeout(function(){;newWindow.close();}, 1500);
+	}
+
     </script>
      <script src="jquery/jquery3.7.js"></script>
      <script src="./bootstrap-5.3.2-dist/js/bootstrap.min.js"></script>

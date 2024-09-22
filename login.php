@@ -48,7 +48,7 @@
                           }
                         } else {
                     ?>
-                <div id="hdd"><h3>Logo</h3></div>
+                <div id="hdd"><img id ="logo_id"src="./pictures/nlnlogo2.png"></div>
                         <form action="" method="post" id="newF">
                             <h3>Login</h3>
                             <input class="fInput" type="text" name="username" id="username" alt="Enter Username" placeholder="Username">
